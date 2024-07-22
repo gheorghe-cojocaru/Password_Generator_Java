@@ -5,11 +5,10 @@ public class Generator {
     public static Scanner keyboard;
 
     public Generator(Scanner scanner) {
-
         keyboard = scanner;
     }
 
-    public  Generator(boolean IncludeUpper, boolean IncludeLower, boolean IncludeNum, boolean IncludeSym) {
+    public Generator(boolean IncludeUpper, boolean IncludeLower, boolean IncludeNum, boolean IncludeSym) {
         alphabet = new Alphabet(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
     }
 
@@ -20,38 +19,31 @@ public class Generator {
         String userOption = "-1";
 
         while (!userOption.equals("4")) {
-
             userOption = keyboard.next();
 
             switch (userOption) {
                 case "1" -> {
                     requestPassword();
                     printMenu();
-                    break;
                 }
                 case "2" -> {
                     checkPassword();
                     printMenu();
-                    break;
                 }
                 case "3" -> {
                     printUsefulInfo();
                     printMenu();
-                    break;
                 }
                 case "4" -> {
                     this.printQuitMessage();
-                    break;
                 }
                 default -> {
                     System.out.println();
                     System.out.println("Bitte suche eine Option aus.");
                     this.printMenu();
                 }
-
             }
         }
-
     }
 
     private Password GeneratePassword(int length) {
@@ -66,7 +58,6 @@ public class Generator {
         for (int i = 0; i < length; i++) {
             int index = (int) (Math.random() * range) + min;
             pass.append(alphabet.getAlphabet().charAt(index));
-
         }
 
         return new Password(pass.toString());
@@ -74,19 +65,14 @@ public class Generator {
 
     private void printUsefulInfo() {
         System.out.println();
-        System.out.println("Dein Password muss mindestens 8 Zeichen lang sein. ");
-        System.out.println("Dein Password muss Grossbuchstaben, Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.");
-        System.out.println("Nach Möglichkeit wird das Passwort nach Zufallprinzip generiert.");
-        System.out.println("Vermeiden Sie bitte doppelte Verwendung eines Passwords.");
-        System.out.println("Vermeiden Sie bitte Zeichenwiederholungen, Tastaturmuster, Wörterbücher, Buchstaben oder Zahlenfolgen" + "\nBenutzernamen, Verwandtennamen" + " und biografische Informationen(z.B. ID-Nummern, Namen).");
+        System.out.println("Dein Passwort muss mindestens 8 Zeichen lang sein.");
+        System.out.println("Dein Passwort muss Großbuchstaben, Kleinbuchstaben, Zahlen und Sonderzeichen enthalten.");
+        System.out.println("Nach Möglichkeit wird das Passwort nach Zufallsprinzip generiert.");
+        System.out.println("Vermeiden Sie bitte doppelte Verwendung eines Passworts.");
+        System.out.println("Vermeiden Sie bitte Zeichenwiederholungen, Tastaturmuster, Wörterbuchwörter, Buchstaben- oder Zahlenfolgen, Benutzernamen, Verwandtennamen und biografische Informationen (z.B. ID-Nummern, Namen).");
         System.out.println("Vermeiden Sie bitte die Verwendung von Informationen, die mit anderen Personen in Verbindung stehen.");
-        System.out.println("Verwenden Sie keine Passwörter, die ausschliesslich aus einer einfachen Kombination der oben genanten schwachen Komponenten bestehen.");
-
-
+        System.out.println("Verwenden Sie keine Passwörter, die ausschließlich aus einer einfachen Kombination der oben genannten schwachen Komponenten bestehen.");
     }
-
-
-
 
     private void requestPassword() {
         boolean IncludeUpper = false;
@@ -97,42 +83,48 @@ public class Generator {
         boolean correctParams;
 
         System.out.println();
-        System.out.println("Hallo, willkommen beim Passwortgenerator :) Antworte die folgenede Fragen mit Ja oder Nein \n" );
+        System.out.println("Hallo, willkommen beim Passwortgenerator :) Antworte die folgenden Fragen mit Ja oder Nein\n");
 
         do {
-            String input;
             correctParams = false;
+            String input;
+
+            // Abfrage für Großbuchstaben
             do {
-                System.out.println("Möchtest du dass auch Grossbuchstaben benutzt werden? ");
+                System.out.println("Möchtest du, dass auch Großbuchstaben benutzt werden? ");
                 input = keyboard.next();
                 PasswortRequestError(input);
-            } while(!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
+            } while (!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
 
             if (this.isInclude(input)) {
                 IncludeUpper = true;
             }
+
+            // Abfrage für Kleinbuchstaben
             do {
-                System.out.println("Möchtest du dass auch Kleinbuchstaben benutzt werden? ");
+                System.out.println("Möchtest du, dass auch Kleinbuchstaben benutzt werden? ");
                 input = keyboard.next();
                 PasswortRequestError(input);
-            } while(!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
+            } while (!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
 
             if (this.isInclude(input)) {
                 IncludeLower = true;
             }
 
+            // Abfrage für Zahlen
             do {
-                System.out.println("Möchtest du dass auch Zahlen benutzt werden? ");
+                System.out.println("Möchtest du, dass auch Zahlen benutzt werden? ");
                 input = keyboard.next();
                 PasswortRequestError(input);
-            } while(!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
+            } while (!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
 
             if (this.isInclude(input)) {
                 IncludeNum = true;
             }
 
+            // Abfrage für Sonderzeichen
             do {
-                System.out.println("Möchtest du dass auch Sonderzeichen benutzt werden? ");
+                System.out.println("Möchtest du, dass auch Sonderzeichen benutzt werden? ");
                 input = keyboard.next();
                 this.PasswortRequestError(input);
             } while (!input.equalsIgnoreCase("ja") && !input.equalsIgnoreCase("nein"));
@@ -142,46 +134,63 @@ public class Generator {
             }
 
             if (!IncludeUpper && !IncludeLower && !IncludeNum && !IncludeSym) {
-                System.out.println("Du musst mindestens eine Wahl treffen um das Password generiert werden zu können.");
+                System.out.println("Du musst mindestens eine Wahl treffen, um das Passwort generiert werden zu können.");
                 correctParams = true;
             }
         } while (correctParams);
 
-        System.out.println("Super! Jetzt gebe die Länge deines Passwords ein: ");
+        // Abfrage für Passwortlänge
+        System.out.println("Super! Jetzt gib die Länge deines Passworts ein: ");
+        while (!keyboard.hasNextInt()) {
+            System.out.println("Bitte gib eine gültige Zahl ein.");
+            keyboard.next(); // Konsumiert die ungültige Eingabe
+        }
         int length = keyboard.nextInt();
+        while (length < 8) {
+            System.out.println("Die Passwortlänge muss mindestens 8 Zeichen lang sein. Bitte gib eine neue Länge ein: ");
+            while (!keyboard.hasNextInt()) {
+                System.out.println("Bitte gib eine gültige Zahl ein.");
+                keyboard.next(); // Konsumiert die ungültige Eingabe
+            }
+            length = keyboard.nextInt();
+        }
+
         Generator generator = new Generator(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
         Password password = generator.GeneratePassword(length);
         System.err.println("Dein generiertes Passwort ist: " + password);
-
     }
 
-    private boolean isInclude(String Input) { return Input.equalsIgnoreCase("yes");}
+    private boolean isInclude(String Input) {
+        return Input.equalsIgnoreCase("ja");
+    }
 
     private void PasswortRequestError(String i) {
-        if (!i.equalsIgnoreCase("yes") && !i.equalsIgnoreCase("no")) {
-            System.out.println("Du hast etwas anderes eingegeben. Versuche es nochmal. ");
+        if (!i.equalsIgnoreCase("ja") && !i.equalsIgnoreCase("nein")) {
+            System.out.println("Du hast etwas anderes eingegeben. Versuche es nochmal.");
         }
     }
-    private void checkPassword() {
-        System.out.println("Gebe dein Password ein: ");
-        String input = keyboard.next();
-        Password p = new Password(input);
-        System.out.println(p.CalculateScore());
 
+    private void checkPassword() {
+        try {
+            System.out.println("Gib dein Passwort ein: ");
+            String input = keyboard.next();
+            Password p = new Password(input);
+            System.out.println(p.CalculateScore());
+        } catch (Exception e) {
+            System.out.println("Ein Fehler ist aufgetreten. Bitte versuche es erneut.");
+        }
     }
 
     private void printMenu() {
-
         System.out.println();
-        System.out.println("Drucke 1 - für um ein Passwort zu generieren.");
-        System.out.println("Drucke 2 - um dein Password zu prüfen.");
-        System.out.println("Drucke 3 - für nützlische Info.");
-        System.out.println("Drucke 4 - für Schliessen");
+        System.out.println("Drücke 1 - um ein Passwort zu generieren.");
+        System.out.println("Drücke 2 - um dein Passwort zu prüfen.");
+        System.out.println("Drücke 3 - für nützliche Informationen.");
+        System.out.println("Drücke 4 - zum Schließen.");
         System.out.println("Deine Wahl: ");
-
     }
 
     private void printQuitMessage() {
-        System.out.println("Das Program schliesst. Tschüss.");;}
-
+        System.out.println("Das Programm schließt. Tschüss.");
+    }
 }
