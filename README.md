@@ -26,7 +26,6 @@ The GC Password Service is a Java-based application designed to help users gener
 
 ###  Deutsch
 
-```markdown
 # GC Password Service
 
 ## Übersicht
